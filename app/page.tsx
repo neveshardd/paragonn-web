@@ -2,7 +2,7 @@ import Hero from "./components/Hero";
 import BlogSection from "./components/BlogSection";
 import DiscordCTA from "./components/DiscordCTA";
 
-const WEBPANEL = process.env.WEBPANEL_URL ?? "http://localhost:5173";
+const WEBPANEL = process.env.NEXT_PUBLIC_DASH_URL ?? "http://localhost:5173";
 
 async function getRecentPosts() {
   try {

@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://paragonn.com.br"
+    process.env.NEXT_PUBLIC_STORE_URL ?? "https://paragonn.com.br"
   ),
   title: "Paragonn — Servidor Minecraft Brasileiro",
   description: "Junte-se ao Paragonn, o melhor servidor de Minecraft do Brasil. Aventura épica, comunidade incrível e experiências únicas esperando por você.",
