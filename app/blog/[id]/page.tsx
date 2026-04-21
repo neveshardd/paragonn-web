@@ -33,7 +33,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
     return (
         <main style={{ minHeight: '100vh', padding: '160px 24px 100px', background: 'var(--bg)' }}>
-            <div style={{ maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ maxWidth: 920, margin: '0 auto' }}>
                 {/* Voltar */}
                 <Link href="/blog" style={{
                     display: 'inline-flex',
@@ -78,23 +78,46 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         </div>
                     </header>
 
-                    {/* Banner / Imagem */}
-                    <div style={{
-                        width: '100%',
-                        height: 400,
-                        background: 'linear-gradient(45deg, #1a1726, #2a2540)',
-                        borderRadius: 32,
-                        marginBottom: 64,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        border: '1px solid var(--border)',
-                        overflow: 'hidden',
-                        fontSize: 64,
-                        opacity: 0.8
-                    }}>
-                        🛡️
-                    </div>
+                    {/* Capa */}
+                    {post.imagem ? (
+                        <div style={{
+                            width: '100%',
+                            aspectRatio: '16 / 9',
+                            minHeight: 320,
+                            maxHeight: 520,
+                            borderRadius: 32,
+                            marginBottom: 64,
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            background: '#111',
+                        }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={post.imagem}
+                                alt={post.titulo}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                referrerPolicy="no-referrer"
+                            />
+                        </div>
+                    ) : (
+                        <div style={{
+                            width: '100%',
+                            aspectRatio: '16 / 9',
+                            minHeight: 320,
+                            background: 'linear-gradient(45deg, #1a1726, #2a2540)',
+                            borderRadius: 32,
+                            marginBottom: 64,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            fontSize: 64,
+                            opacity: 0.8
+                        }} aria-hidden>
+                            🛡️
+                        </div>
+                    )}
 
                     {/* Conteúdo */}
                     <div className="post-content" style={{

@@ -20,11 +20,57 @@ function fmt(d: string) {
   });
 }
 
+function Cover({ src, alt }: { src: string | null; alt: string }) {
+  if (src) {
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "16 / 9",
+          minHeight: 280,
+          maxHeight: 420,
+          background: "linear-gradient(45deg, #1a1726, #2a2540)",
+          overflow: "hidden"
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt={alt}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
+      </div>
+    );
+  }
+  return (
+    <div
+      style={{
+        width: "100%",
+        aspectRatio: "16 / 9",
+        minHeight: 280,
+        maxHeight: 360,
+        background: "linear-gradient(135deg, #1a1726 0%, #2a2540 50%, #1a1528 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 72,
+        opacity: 0.35
+      }}
+      aria-hidden
+    >
+      🛡️
+    </div>
+  );
+}
+
 export default function BlogSection({ posts }: { posts: Post[] }) {
   return (
     <section id="blog" style={{ padding: "120px 24px", background: "var(--bg)", position: "relative" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 72 }}>
           <div className="section-label">Fique por dentro</div>
           <h2 className="section-title">Blog & <span className="text-gold">Novidades</span></h2>
           <div className="gold-line" style={{ margin: "24px auto" }} />
@@ -35,7 +81,13 @@ export default function BlogSection({ posts }: { posts: Post[] }) {
             Nenhuma notícia recente.
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))", gap: 32 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 520px), 1fr))",
+              gap: 40
+            }}
+          >
             {posts.map((post, i) => (
               <PostCard key={post.id} post={post} featured={i === 0} />
             ))}
@@ -55,27 +107,29 @@ function PostCard({ post, featured }: { post: Post; featured: boolean }) {
             height: '100%',
             overflow: 'hidden',
             transition: 'all 0.3s ease',
-            borderTop: featured ? '4px solid var(--gold)' : '1px solid var(--border)'
+            borderTop: featured ? '4px solid var(--gold)' : '1px solid var(--border)',
+            borderRadius: 20
         }}>
-          <div style={{ padding: 32, flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Cover src={post.imagem} alt={post.titulo} />
+          <div style={{ padding: "36px 40px", flex: 1, display: 'flex', flexDirection: 'column' }}>
             {featured && (
-              <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16, display: 'block' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16, display: 'block', letterSpacing: '0.08em' }}>
                 ✦ Mais Recente
               </span>
             )}
             
-            <h3 style={{ fontSize: 20, fontWeight: 700, color: "#fff", marginBottom: 12, lineHeight: 1.4 }}>
+            <h3 style={{ fontSize: 'clamp(22px, 2.4vw, 28px)', fontWeight: 800, color: "#fff", marginBottom: 16, lineHeight: 1.25 }}>
               {post.titulo}
             </h3>
 
             <p style={{ 
-                fontSize: 14, 
+                fontSize: 16, 
                 color: "var(--muted)", 
-                lineHeight: 1.6, 
-                marginBottom: 24, 
+                lineHeight: 1.65, 
+                marginBottom: 28, 
                 flex: 1,
                 display: "-webkit-box",
-                WebkitLineClamp: 3,
+                WebkitLineClamp: 4,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden"
             }}>
@@ -86,25 +140,25 @@ function PostCard({ post, featured }: { post: Post; featured: boolean }) {
                 display: "flex", 
                 alignItems: "center", 
                 justifyContent: "space-between",
-                paddingTop: 24,
+                paddingTop: 28,
                 borderTop: '1px solid var(--border)'
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ 
-                    width: 32, height: 32, borderRadius: '50%', background: 'var(--surface)', 
+                    width: 44, height: 44, borderRadius: '50%', background: 'var(--surface)', 
                     border: '1px solid var(--gold)', color: 'var(--gold)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700
                 }}>
                   {post.autor.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                   <div style={{ fontSize: 13, fontWeight: 600, color: "#fff" }}>{post.autor}</div>
-                   <div style={{ fontSize: 11, color: "var(--muted)" }}>{fmt(post.dataHorario)}</div>
+                   <div style={{ fontSize: 15, fontWeight: 600, color: "#fff" }}>{post.autor}</div>
+                   <div style={{ fontSize: 13, color: "var(--muted)" }}>{fmt(post.dataHorario)}</div>
                 </div>
               </div>
               
-              <div style={{ color: 'var(--gold)', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  LER <span style={{ fontSize: 16 }}>›</span>
+              <div style={{ color: 'var(--gold)', fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  LER <span style={{ fontSize: 18 }}>›</span>
               </div>
             </div>
           </div>
@@ -113,7 +167,7 @@ function PostCard({ post, featured }: { post: Post; featured: boolean }) {
         <style>{`
             .blog-card-home:hover {
                 transform: translateY(-8px);
-                box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+                box-shadow: 0 16px 48px rgba(0,0,0,0.45);
                 border-color: var(--gold);
             }
             .blog-card-home:hover h3 { color: var(--gold); }
