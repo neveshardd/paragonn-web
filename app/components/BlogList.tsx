@@ -93,7 +93,7 @@ export default function BlogList({ posts }: { posts: Post[] }) {
           Nenhuma notícia encontrada no momento.
         </div>
       ) : (
-        <div style={{ display: 'grid', gap: 48 }}>
+        <div className="blog-grid">
           {posts.map((post) => (
             <Link 
               key={post.id} 
@@ -107,50 +107,50 @@ export default function BlogList({ posts }: { posts: Post[] }) {
                   padding: 0,
                   background: 'linear-gradient(135deg, var(--surface) 0%, #15131f 100%)',
                   borderTop: '3px solid var(--gold)',
-                  display: 'grid',
-                  gridTemplateColumns: 'minmax(280px, 0.95fr) minmax(0, 1.15fr)',
-                  alignItems: 'stretch',
+                  display: 'flex',
+                  flexDirection: 'column',
                   transition: 'all 0.3s ease',
                   borderRadius: 24,
                   overflow: 'hidden',
+                  height: '100%',
                 }}
               >
-                <Cover src={post.imagem} alt={post.titulo} />
+                <div style={{ width: '100%', aspectRatio: '16/10' }}>
+                   <Cover src={post.imagem} alt={post.titulo} />
+                </div>
 
                 <div
                   style={{
-                    padding: '44px 48px 48px',
+                    padding: '32px 32px 40px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 20,
-                    minWidth: 0,
+                    gap: 16,
+                    flex: 1,
                   }}
                 >
-                  <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ 
-                          fontSize: 11, 
+                          fontSize: 10, 
                           fontWeight: 800, 
                           textTransform: 'uppercase', 
                           color: 'var(--gold)', 
                           background: 'rgba(245,166,35,0.1)',
-                          padding: '8px 16px',
+                          padding: '6px 12px',
                           borderRadius: 100,
                           border: '1px solid rgba(245,166,35,0.2)',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 6,
                           letterSpacing: '0.06em',
                       }}>
-                          <span style={{ color: 'var(--gold)' }}>✦</span> Paragonn
+                          ✦ Notícia
                       </span>
+                      <span style={{ fontSize: 13, color: 'var(--muted)' }}>{fmt(post.dataHorario)}</span>
                   </div>
 
                   <h2 style={{ 
-                      fontSize: 'clamp(26px, 4vw, 40px)', 
+                      fontSize: 24, 
                       fontWeight: 800, 
                       color: '#fff', 
-                      lineHeight: 1.15,
-                      letterSpacing: '-0.02em',
+                      lineHeight: 1.25,
+                      letterSpacing: '-0.01em',
                       margin: 0,
                   }}>
                     {post.titulo}
@@ -158,13 +158,12 @@ export default function BlogList({ posts }: { posts: Post[] }) {
 
                   <p style={{ 
                       color: 'var(--muted)', 
-                      fontSize: 17, 
-                      lineHeight: 1.65, 
+                      fontSize: 15, 
+                      lineHeight: 1.6, 
                       margin: 0,
                       flex: 1,
-                      maxWidth: '100%',
                       display: '-webkit-box',
-                      WebkitLineClamp: 5,
+                      WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
                   }}>
@@ -172,19 +171,17 @@ export default function BlogList({ posts }: { posts: Post[] }) {
                   </p>
 
                   <div style={{ 
-                      marginTop: 8, 
-                      paddingTop: 32, 
+                      marginTop: 16, 
+                      paddingTop: 24, 
                       borderTop: '1px solid var(--border)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      flexWrap: 'wrap',
-                      gap: 16,
                   }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                           <div style={{ 
-                              width: 48, 
-                              height: 48, 
+                              width: 32, 
+                              height: 32, 
                               borderRadius: '50%', 
                               background: 'var(--gold)', 
                               display: 'flex', 
@@ -192,30 +189,16 @@ export default function BlogList({ posts }: { posts: Post[] }) {
                               justifyContent: 'center',
                               color: '#000',
                               fontWeight: 800,
-                              fontSize: 16
+                              fontSize: 12
                           }}>
                               {post.autor.charAt(0).toUpperCase()}
                           </div>
-                          <div>
-                              <div style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}>{post.autor}</div>
-                              <div style={{ fontSize: 14, color: 'var(--muted)' }}>{fmt(post.dataHorario)}</div>
-                          </div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>{post.autor}</div>
                       </div>
 
-                      <div style={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 12, 
-                          color: 'var(--gold)', 
-                          fontWeight: 700, 
-                          fontSize: 15,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em'
-                      }}>
-                          Ler Artigo
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <path d="M5 12h14m-7-7 7 7-7 7" />
-                          </svg>
+                      <div className="read-more-link">
+                          LER ARTIGO
+                          <span>→</span>
                       </div>
                   </div>
                 </div>
@@ -226,14 +209,20 @@ export default function BlogList({ posts }: { posts: Post[] }) {
       )}
 
       <style>{`
-          @media (max-width: 900px) {
-            .blog-card-hover {
-              grid-template-columns: 1fr !important;
-            }
-            .blog-list-cover {
-              min-height: 240px !important;
-              max-height: 320px;
-            }
+          .blog-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 32px;
+          }
+          @media (max-width: 1200px) {
+              .blog-grid {
+                  grid-template-columns: repeat(2, 1fr);
+              }
+          }
+          @media (max-width: 768px) {
+              .blog-grid {
+                  grid-template-columns: 1fr;
+              }
           }
           .blog-card-hover:hover {
               transform: translateY(-8px);
@@ -242,6 +231,22 @@ export default function BlogList({ posts }: { posts: Post[] }) {
           }
           .blog-card-hover:hover h2 {
               color: var(--gold);
+          }
+          .read-more-link {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              color: var(--gold);
+              font-weight: 700;
+              font-size: 13px;
+              letter-spacing: 0.05em;
+          }
+          .blog-card-hover:hover .read-more-link span {
+              transform: translateX(4px);
+          }
+          .read-more-link span {
+              transition: transform 0.2s ease;
+              font-size: 18px;
           }
       `}</style>
     </div>

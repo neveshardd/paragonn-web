@@ -129,7 +129,7 @@ function PostCard({ post, featured }: { post: Post; featured: boolean }) {
                 marginBottom: 28, 
                 flex: 1,
                 display: "-webkit-box",
-                WebkitLineClamp: 4,
+                WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden"
             }}>

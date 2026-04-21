@@ -138,50 +138,76 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Fullscreen) */}
       {menuOpen && (
         <div
           style={{
-            background: "rgba(13, 11, 19, 0.98)",
-            borderTop: "1px solid var(--border)",
-            padding: "16px 24px 24px",
+            position: "fixed",
+            inset: 0,
+            background: "rgba(10, 8, 14, 0.98)",
+            backdropFilter: "blur(20px)",
+            zIndex: 99,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 40,
+            animation: "fadeIn 0.3s ease forwards",
           }}
         >
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                display: "block",
-                padding: "12px 0",
-                fontSize: 15,
-                fontWeight: 500,
-                color: "var(--muted)",
-                borderBottom: "1px solid var(--border)",
-                textDecoration: "none",
+          <div style={{ display: "flex", flexDirection: "column", gap: 24, textAlign: "center", width: "100%" }}>
+            {NAV_LINKS.map((l, i) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  fontSize: 28,
+                  fontWeight: 800,
+                  color: "#fff",
+                  textDecoration: "none",
+                  transition: "all 0.2s",
+                  opacity: 0,
+                  animation: `slideUp 0.4s ease forwards ${i * 0.1}s`,
+                }}
+              >
+                {l.label}
+              </Link>
+            ))}
+            <div style={{ height: 1, background: "var(--border)", margin: "16px 0", opacity: 0, animation: "fadeIn 0.5s ease forwards 0.4s" }} />
+            <a
+              href="https://discord.gg/paragonn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              style={{ 
+                  padding: "16px 32px", 
+                  fontSize: 16, 
+                  justifyContent: "center", 
+                  opacity: 0, 
+                  animation: "fadeIn 0.5s ease forwards 0.5s" 
               }}
             >
-              {l.label}
-            </Link>
-          ))}
-          <a
-            href="https://discord.gg/paragonn"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-            style={{ marginTop: 20, justifyContent: "center", animation: "none" }}
-          >
-            <DiscordIcon />
-            Entrar no Discord
-          </a>
+              <DiscordIcon />
+              Entrar no Discord
+            </a>
+          </div>
         </div>
       )}
 
       <style>{`
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
+          .mobile-menu-btn { display: flex !important; z-index: 101; }
         }
         .nav-item:hover { color: #fff !important; }
       `}</style>
