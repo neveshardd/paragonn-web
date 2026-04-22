@@ -19,7 +19,9 @@ async function getRecentPosts() {
 
 async function getDiscordLink() {
   try {
-    const res = await fetch(`${WEBPANEL}/api/configuracoes`, { cache: 'no-store' });
+    const res = await fetch(`${WEBPANEL}/api/configuracoes`, { 
+      next: { revalidate: 60 } 
+    });
     if (!res.ok) return { discord_link: 'https://discord.gg/paragonn', server_ip: 'play.paragonn.com.br' };
     const configs = await res.json();
     return {

@@ -7,7 +7,7 @@ async function getEquipe() {
     const url = `${WEBPANEL}/api/equipe`;
     console.log(`[Equipe] Buscando dados de: ${url}`);
     const res = await fetch(url, {
-      next: { revalidate: 0 },
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {
