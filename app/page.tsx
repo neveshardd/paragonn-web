@@ -27,6 +27,7 @@ async function getDiscordLink() {
       server_ip: configs.server_ip || 'play.paragonn.com.br'
     };
   } catch (err) {
+    console.error('Erro ao buscar configurações do Painel:', err);
     return { discord_link: 'https://discord.gg/paragonn', server_ip: 'play.paragonn.com.br' };
   }
 }

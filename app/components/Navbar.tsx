@@ -15,6 +15,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [discordLink, setDiscordLink] = useState('https://discord.gg/paragonn');
+  const [serverIP, setServerIP] = useState('play.paragonn.com.br');
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -24,14 +25,15 @@ export default function Navbar() {
     
     window.addEventListener("scroll", fn);
 
-    // Fetch Discord Link
+    // Fetch Configs
     const WEBPANEL = process.env.NEXT_PUBLIC_DASH_URL || "http://localhost:5173";
     fetch(`${WEBPANEL}/api/configuracoes`)
       .then(res => res.json())
       .then(data => {
         if (data.discord_link) setDiscordLink(data.discord_link);
+        if (data.server_ip) setServerIP(data.server_ip);
       })
-      .catch(err => console.error("Erro ao buscar link do Discord:", err));
+      .catch(err => console.error("Erro ao buscar configurações:", err));
 
     return () => window.removeEventListener("scroll", fn);
   }, []);
@@ -147,6 +149,46 @@ export default function Navbar() {
             <DiscordIcon />
             Discord
           </a>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            padding: '6px 14px',
+            borderRadius: 10,
+            marginLeft: 8
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: 9, fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>IP</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--gold)', fontFamily: 'ui-monospace, monospace' }}>{serverIP}</span>
+            </div>
+            <button 
+                onClick={() => {
+                    navigator.clipboard.writeText(serverIP);
+                    // Could add a toast here
+                }}
+                style={{ 
+                    background: 'none', 
+                    border: 'none', 
+                    color: 'var(--muted)', 
+                    cursor: 'pointer',
+                    padding: 4,
+                    display: 'flex',
+                    alignItems: 'center',
+                    transition: 'color 0.2s'
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+                title="Copiar IP"
+            >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile toggle */}
@@ -231,6 +273,29 @@ export default function Navbar() {
               <DiscordIcon />
               Entrar no Discord
             </a>
+
+            <div style={{ 
+              marginTop: 12,
+              padding: '16px',
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid var(--border)',
+              borderRadius: 16,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
+              opacity: 0,
+              animation: "fadeIn 0.5s ease forwards 0.6s"
+            }}>
+                <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase' }}>IP do Servidor</span>
+                <span style={{ fontSize: 20, fontWeight: 800, color: 'var(--gold)', fontFamily: 'ui-monospace, monospace' }}>{serverIP}</span>
+                <button 
+                    onClick={() => navigator.clipboard.writeText(serverIP)}
+                    className="btn-outline"
+                    style={{ padding: '8px', fontSize: 12, marginTop: 4 }}
+                >
+                    COPIAR IP
+                </button>
+            </div>
           </div>
         </div>
       )}
