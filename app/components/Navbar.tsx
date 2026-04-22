@@ -19,10 +19,10 @@ export default function Navbar() {
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
-    
+
     // Check initial scroll position
     fn();
-    
+
     window.addEventListener("scroll", fn);
 
     // Fetch Configs
@@ -130,20 +130,20 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-discord-nav"
-            style={{ 
-                padding: "8px 18px", 
-                fontSize: 13, 
-                background: "#5865F2",
-                color: "#fff",
-                fontWeight: 700,
-                borderRadius: 10,
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                boxShadow: "0 3px 0px #4752c4",
-                transition: "all 0.2s ease",
-                position: "relative"
+            style={{
+              padding: "8px 18px",
+              fontSize: 13,
+              background: "#5865F2",
+              color: "#fff",
+              fontWeight: 700,
+              borderRadius: 10,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              boxShadow: "0 3px 0px #4752c4",
+              transition: "all 0.2s ease",
+              position: "relative"
             }}
           >
             <DiscordIcon />
@@ -161,32 +161,32 @@ export default function Navbar() {
             marginLeft: 8
           }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: 9, fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>IP</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--gold)', fontFamily: 'ui-monospace, monospace' }}>{serverIP}</span>
+              <span style={{ fontSize: 9, fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>IP</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--gold)', fontFamily: 'ui-monospace, monospace' }}>{serverIP}</span>
             </div>
-            <button 
-                onClick={() => {
-                    navigator.clipboard.writeText(serverIP);
-                    // Could add a toast here
-                }}
-                style={{ 
-                    background: 'none', 
-                    border: 'none', 
-                    color: 'var(--muted)', 
-                    cursor: 'pointer',
-                    padding: 4,
-                    display: 'flex',
-                    alignItems: 'center',
-                    transition: 'color 0.2s'
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
-                title="Copiar IP"
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(serverIP);
+                // Could add a toast here
+              }}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--muted)',
+                cursor: 'pointer',
+                padding: 4,
+                display: 'flex',
+                alignItems: 'center',
+                transition: 'color 0.2s'
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+              title="Copiar IP"
             >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
             </button>
           </div>
         </div>
@@ -252,50 +252,27 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-discord-nav"
-              style={{ 
-                  padding: "16px 32px", 
-                  fontSize: 16, 
-                  justifyContent: "center", 
-                  background: "#5865F2",
-                  color: "#fff",
-                  fontWeight: 800,
-                  borderRadius: 12,
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  boxShadow: "0 5px 0px #4752c4",
-                  transition: "all 0.2s ease",
-                  opacity: 0, 
-                  animation: "fadeIn 0.5s ease forwards 0.5s" 
+              style={{
+                padding: "16px 32px",
+                fontSize: 16,
+                justifyContent: "center",
+                background: "#5865F2",
+                color: "#fff",
+                fontWeight: 800,
+                borderRadius: 12,
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                boxShadow: "0 5px 0px #4752c4",
+                transition: "all 0.2s ease",
+                opacity: 0,
+                animation: "fadeIn 0.5s ease forwards 0.5s"
               }}
             >
               <DiscordIcon />
               Entrar no Discord
             </a>
-
-            <div style={{ 
-              marginTop: 12,
-              padding: '16px',
-              background: 'rgba(255,255,255,0.02)',
-              border: '1px solid var(--border)',
-              borderRadius: 16,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8,
-              opacity: 0,
-              animation: "fadeIn 0.5s ease forwards 0.6s"
-            }}>
-                <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase' }}>IP do Servidor</span>
-                <span style={{ fontSize: 20, fontWeight: 800, color: 'var(--gold)', fontFamily: 'ui-monospace, monospace' }}>{serverIP}</span>
-                <button 
-                    onClick={() => navigator.clipboard.writeText(serverIP)}
-                    className="btn-outline"
-                    style={{ padding: '8px', fontSize: 12, marginTop: 4 }}
-                >
-                    COPIAR IP
-                </button>
-            </div>
           </div>
         </div>
       )}
