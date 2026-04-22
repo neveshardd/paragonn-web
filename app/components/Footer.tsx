@@ -1,7 +1,23 @@
+"use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
+  const [discordLink, setDiscordLink] = useState('https://discord.gg/paragonn');
+  const [serverIP, setServerIP] = useState('play.paragonn.com.br');
+
+  useEffect(() => {
+    const WEBPANEL = process.env.NEXT_PUBLIC_DASH_URL || "http://localhost:5173";
+    fetch(`${WEBPANEL}/api/configuracoes`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.discord_link) setDiscordLink(data.discord_link);
+        if (data.server_ip) setServerIP(data.server_ip);
+      })
+      .catch(err => console.error("Erro ao buscar link do Discord:", err));
+  }, []);
+
   return (
     <>
       <style>{`
@@ -97,7 +113,7 @@ export default function Footer() {
               </h4>
               <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 <a
-                  href="https://discord.gg/paragonn"
+                  href={discordLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-link discord"
@@ -142,7 +158,7 @@ export default function Footer() {
                     color: "var(--gold)",
                   }}
                 >
-                  play.paragonn.com.br
+                  {serverIP}
                 </div>
                 <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 4 }}>
                   Versão: 1.8 — 1.21

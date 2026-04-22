@@ -15,9 +15,23 @@ async function getPost(id: string) {
     }
 }
 
+async function getDiscordLink() {
+    try {
+        const res = await fetch(`${WEBPANEL}/api/configuracoes`, { cache: 'no-store' });
+        if (!res.ok) return 'https://discord.gg/paragonn';
+        const configs = await res.json();
+        return configs.discord_link || 'https://discord.gg/paragonn';
+    } catch (err) {
+        return 'https://discord.gg/paragonn';
+    }
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const post = await getPost(id);
+    const [post, discordLink] = await Promise.all([
+        getPost(id),
+        getDiscordLink()
+    ]);
 
     if (!post) {
         notFound();
@@ -135,9 +149,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         <p style={{ color: 'var(--muted)', fontSize: 15, marginBottom: 24 }}>
                             Gostou dessa novidade? Comente lá no nosso Discord!
                         </p>
-                        <Link href="https://discord.gg/paragonn" target="_blank" className="btn-primary" style={{ display: 'inline-flex', padding: '14px 40px' }}>
+                        <a href={discordLink} target="_blank" className="btn-primary" style={{ display: 'inline-flex', padding: '14px 40px' }}>
                             ENTRAR NO DISCORD
-                        </Link>
+                        </a>
                     </footer>
                 </article>
             </div>

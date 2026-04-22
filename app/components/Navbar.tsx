@@ -14,10 +14,25 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [discordLink, setDiscordLink] = useState('https://discord.gg/paragonn');
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
+    
+    // Check initial scroll position
+    fn();
+    
     window.addEventListener("scroll", fn);
+
+    // Fetch Discord Link
+    const WEBPANEL = process.env.NEXT_PUBLIC_DASH_URL || "http://localhost:5173";
+    fetch(`${WEBPANEL}/api/configuracoes`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.discord_link) setDiscordLink(data.discord_link);
+      })
+      .catch(err => console.error("Erro ao buscar link do Discord:", err));
+
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
@@ -109,11 +124,25 @@ export default function Navbar() {
           })}
 
           <a
-            href="https://discord.gg/paragonn"
+            href={discordLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary"
-            style={{ padding: "9px 22px", fontSize: 13, animation: "none" }}
+            className="btn-discord-nav"
+            style={{ 
+                padding: "8px 18px", 
+                fontSize: 13, 
+                background: "#5865F2",
+                color: "#fff",
+                fontWeight: 700,
+                borderRadius: 10,
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                boxShadow: "0 3px 0px #4752c4",
+                transition: "all 0.2s ease",
+                position: "relative"
+            }}
           >
             <DiscordIcon />
             Discord
@@ -177,14 +206,24 @@ export default function Navbar() {
             ))}
             <div style={{ height: 1, background: "var(--border)", margin: "16px 0", opacity: 0, animation: "fadeIn 0.5s ease forwards 0.4s" }} />
             <a
-              href="https://discord.gg/paragonn"
+              href={discordLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
+              className="btn-discord-nav"
               style={{ 
                   padding: "16px 32px", 
                   fontSize: 16, 
                   justifyContent: "center", 
+                  background: "#5865F2",
+                  color: "#fff",
+                  fontWeight: 800,
+                  borderRadius: 12,
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  boxShadow: "0 5px 0px #4752c4",
+                  transition: "all 0.2s ease",
                   opacity: 0, 
                   animation: "fadeIn 0.5s ease forwards 0.5s" 
               }}
@@ -197,6 +236,15 @@ export default function Navbar() {
       )}
 
       <style>{`
+        .btn-discord-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0px #4752c4 !important;
+            filter: brightness(1.1);
+        }
+        .btn-discord-nav:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0px #4752c4 !important;
+        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }

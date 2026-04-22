@@ -17,14 +17,31 @@ async function getRecentPosts() {
   }
 }
 
+async function getDiscordLink() {
+  try {
+    const res = await fetch(`${WEBPANEL}/api/configuracoes`, { cache: 'no-store' });
+    if (!res.ok) return { discord_link: 'https://discord.gg/paragonn', server_ip: 'play.paragonn.com.br' };
+    const configs = await res.json();
+    return {
+      discord_link: configs.discord_link || 'https://discord.gg/paragonn',
+      server_ip: configs.server_ip || 'play.paragonn.com.br'
+    };
+  } catch (err) {
+    return { discord_link: 'https://discord.gg/paragonn', server_ip: 'play.paragonn.com.br' };
+  }
+}
+
 export default async function Home() {
-  const posts = await getRecentPosts();
+  const [posts, configs] = await Promise.all([
+    getRecentPosts(),
+    getDiscordLink()
+  ]);
 
   return (
     <main>
-      <Hero />
+      <Hero discordLink={configs.discord_link} serverIP={configs.server_ip} />
       <BlogSection posts={posts} />
-      <DiscordCTA />
+      <DiscordCTA discordLink={configs.discord_link} />
     </main>
   );
 }
