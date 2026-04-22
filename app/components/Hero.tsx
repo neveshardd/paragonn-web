@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 
-
-
 export default function Hero({ discordLink = '', serverIP = 'play.paragonn.com.br' }: { discordLink?: string; serverIP?: string }) {
   return (
     <section
@@ -18,8 +16,31 @@ export default function Hero({ discordLink = '', serverIP = 'play.paragonn.com.b
         background: "var(--bg)",
       }}
     >
-      {/* ... (Background elements) */}
+      {/* Background radial glow */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(192,57,43,0.18) 0%, rgba(245,166,35,0.08) 40%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
 
+      {/* Grid pattern */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "linear-gradient(rgba(42,37,64,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(42,37,64,0.4) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+          pointerEvents: "none",
+          maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%)",
+        }}
+      />
+
+      {/* Content */}
       <div
         style={{
           position: "relative",
@@ -30,7 +51,23 @@ export default function Hero({ discordLink = '', serverIP = 'play.paragonn.com.b
           textAlign: "center",
         }}
       >
-        {/* ... (Tagline) */}
+        {/* Tagline */}
+        <p
+          className="fade-up"
+          style={{
+            fontSize: "clamp(18px, 2.5vw, 24px)",
+            color: "var(--muted)",
+            lineHeight: 1.7,
+            maxWidth: 560,
+            margin: "0 auto 40px",
+          }}
+        >
+          O servidor de Minecraft mais épico do Brasil.
+          <br />
+          <span style={{ color: "var(--text)" }}>
+            Aventura, comunidade e conquistas esperando por você.
+          </span>
+        </p>
 
         {/* IP Box */}
         <div
