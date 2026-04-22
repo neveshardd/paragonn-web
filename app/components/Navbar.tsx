@@ -150,45 +150,6 @@ export default function Navbar() {
             Discord
           </a>
 
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            padding: '6px 14px',
-            borderRadius: 10,
-            marginLeft: 8
-          }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontSize: 9, fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>IP</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--gold)', fontFamily: 'ui-monospace, monospace' }}>{serverIP}</span>
-            </div>
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(serverIP);
-                // Could add a toast here
-              }}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'var(--muted)',
-                cursor: 'pointer',
-                padding: 4,
-                display: 'flex',
-                alignItems: 'center',
-                transition: 'color 0.2s'
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
-              title="Copiar IP"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            </button>
-          </div>
         </div>
 
         {/* Mobile toggle */}
